@@ -1,0 +1,71 @@
+操作表
+	mui的js绑定事件
+		mui('body').on('tap','#Btn',function(){
+			mui('#sheet1').popover('toggle');
+		})
+
+
+轮播图（支持循环和不支持循环）
+	
+	轮播图小圆点，在輪播組件添加下面結構（这个结构官网没有给出）
+
+	<div class="mui-slider-indicator">
+		<div class="mui-indicator mui-active"></div>
+		<div class="mui-indicator"></div>
+		<div class="mui-indicator"></div>
+		<div class="mui-indicator"></div>
+		<div class="mui-indicator"></div>
+	</div>
+	
+选择器
+	选择器的使用依赖文件，去hello mui工程当中去找到相关文件
+		
+
+
+
+案例：（注意，头部和底部选项卡和主页面内容容器是并列的）
+
+	1、侧滑菜单
+		侧边栏切换按钮需要添加事件进行侧边栏显示和隐藏；
+
+	2、底部菜单选项卡
+
+	3、头部搜索框（记得别忘了标题的类以及手动点击失去焦点）
+		搜索框的样式需要调节
+		将原来默认的东西替换为我们的搜索框，记住把mui-title加上，否则按钮长度不对；
+		<div class="mui-input-row mui-search mui-title">
+	    		<input type="search" class="mui-input-clear" placeholder="">
+		</div>
+		.mui-search::before{
+			top: 10px;
+		}
+			
+		.mui-search .mui-placeholder{
+			top:5px;
+		}
+
+	4、城市按钮
+		顶部城市按钮  
+		<button type="button" id="cityBtn" class="mui-btn mui-btn-blue mui-btn-block">城市</button>
+		
+		#cityBtn {
+			float: right;
+			width: 12%;
+		}
+
+	5、轮播图
+	6、卡片视图
+	7、图文列表
+
+	8、图文列表的分享按钮布局
+		.shareBtn{
+				padding: 3px 5px;
+				top: 30% !important;
+				right: 8px !important;
+			}
+
+	9、点击分享按钮的操作表点击事件（层级问题）
+
+	10、侧滑菜单的内容及侧滑按钮点击事件
+
+

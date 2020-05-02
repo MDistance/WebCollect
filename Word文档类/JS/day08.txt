@@ -1,0 +1,316 @@
+day08
+
+一、对象相关
+
+4、 	原型对象和原型链  ***************************************88
+
+		原型对象
+			什么是原型对象:
+				原型对象是默认是object的实例对象
+				一个函数对象在定义的时候，伴随它出现的另外一个对象就是原型对象；
+
+			原型对象的作用
+				资源共享  节约内存
+
+			显示原型对象和隐式原型对象概念
+
+			原型对象身上添加的东西是为实例化对象来服务的,而不是构造函数，构造函数没办法获取
+				
+			
+		原型链
+			对象在查找属性或者方法的过程
+			找一个对象的属性，先从自身去找  再从自身的隐式原型去找  还找不到  继续从自身的隐式原型的隐式原型去找
+		    直到找到Object的显示原型。中间只要是第一次找到，就找到了，最终如果都没有找到，会返回undefined；
+
+		
+
+5、apply和call可以让一个对象使用另外一个对象的方法；*******
+
+	apply和call可以使用第一个参数传对象，让函数或者方法的执行者（this）指向这个对象；
+	让一个实例对象去调用window的方法（也就是我们所说的函数）
+	函数或者方法.apply(对象，【函数的参数】)；
+	函数或者方法.call(对象，函数的参数1，函数的参数2)；
+
+
+	//call和apply干了两件事，1、调用的时候先把this指向改为p1
+			 2、然后再去执行add函数	
+
+	
+	//call和apply可以让一个对象执行另外一个对象的方法；
+
+
+	
+			
+6.	对象是哪个构造函数的实例判断 instanceof
+	typeof 应用的场景
+	instanceof 应用的场景
+
+	typeof 值     返回的是数据类型的小写字符串形式  
+
+	数字    'number'
+	字符串 ‘string’
+	布尔    'boolean'         
+	undefined   'undefined'
+	null    'object'
+	数组    'object'
+	函数    'function'
+	对象   	'object'	
+
+	
+	typeof 可以判定5种：
+		数字    'number'
+		字符串 ‘string’
+		布尔    'boolean'         
+		undefined   'undefined'
+		函数    'function'
+
+
+	instanceof 用来判断一个对象是哪个构造函数的实例用的     A(对象数据) instanceof B（构造函数）
+
+		专门用来解决判定数组和对象的时候使用
+
+
+	===
+		全等于可以用来判定null和undefined的时候使用；因为他们两个都是数据类型，但是这数据类型当中只有一个值；
+
+	   	a === null
+		a === undefined
+
+
+
+
+
+
+
+
+二、 值类型，引用数据类型，堆， 栈
+	1.	值类型和引用数据类型的概念
+		值类型都有啥: 其实就是我们所说的基本数据类型
+		对象类型都有啥：引用数据类型就是我们所说的对象数据类型、复杂（复合）
+
+
+	2. 	堆和栈的概念
+			数据结构的两种，专门用来解决数据的存储和读取
+
+			内存：栈内存和堆内存（其它语言）   js当中只有堆内存
+			      栈内存比较小  但是块	
+			      堆内存比较大  但是慢
+
+
+			      但是数据结构是分栈结构和堆结构的
+
+			栈：    栈的数据结构     FILO（有序）    桶   
+
+			堆：    链表的数据结构   无序的可以随意添加和删除    
+
+			
+	3.	堆和栈的图解
+		
+
+	4.	值类型和引用数据类型与堆栈的关系（堆空间释放）；
+			堆空间的释放是靠垃圾回收机制进行的
+			当程序函数或者整个程序执行完成后，栈里面所有的东西都被释放销毁，堆当中的数据可能还在，只是没有任何的变量指向（引用）
+		那么堆当中的数据就会变成垃圾对象。回收机制会在适当的时候将垃圾对象清理回收；
+
+			如果我们在程序当中需要去删除对象，那么就将这个对象的变量赋值为null，代表这个对象引用被改变，这个对象也就成了垃圾对象
+		其实删除对象就是让堆当中的对象数据成为垃圾对象；
+
+		var a = {};
+
+		a里面存了  {}地址    a指向了{}这个对象  
+
+		a = null;   把a的指向断开了；
+
+
+
+
+
+		
+	5.	面试题讲解:
+			第一题:
+			//var num1 = 10;
+			//var num2 = num1;
+			//num1 = 20;
+			//console.log(num1); 
+			//console.log(num2); 
+
+
+			
+
+			//第二题
+
+			//var num = 50;
+			//
+			//function f1(num) {
+			//	num = 60;
+			//	console.log(num); 
+			//}
+
+			//f1(num);
+			//console.log(num);
+
+
+
+	
+			
+			//第三题
+			var num1 = 55;
+			var num2 = 66; 
+
+			function f1(num, num1) {
+				num = 100;
+				num1 = 100;
+				num2 = 100;
+				console.log(num); //100
+				console.log(num1); //100
+				console.log(num2); //100
+			}
+			f1(num1, num2);
+			console.log(num1); //55
+			console.log(num2); //100
+			console.log(num) //not defined
+
+
+			
+
+			
+
+
+			3、函数传参如果传的是基本数据类型和传引用（对象）有什么区别；
+			
+			var a = 10;
+			var b = 20;
+
+			function add(a,b){
+				a = 30;
+				return a + b;
+			}
+
+			add(a,b);
+			console.log(a);
+
+
+
+
+
+			function f1(arr){
+				for(var i = 0; i < arr.length; i++){
+					arr[i] += 2
+
+				}
+
+			}
+			var arr;
+
+			arr = [1,2];
+			
+
+			f1(arr);
+
+
+
+			
+			var a = [1,2];
+			var b = a;
+			a[0] = 20;
+			console.log(b);
+
+			
+			
+
+			var a = [];
+			var b = [];
+			console.log(a == b);
+			
+
+
+			第四题
+			function Person(name, age, salary) {
+				this.name = name;
+				this.age = age;
+				this.salary = salary;
+			}
+
+			function f1(pp) {
+				pp.name = "ls";
+				pp = new Person("aa", 18, 10);
+			}
+
+			
+
+			var p = new Person("zs", 18, 1000);
+			console.log(p.name);//zs
+			f1(p);
+			console.log(p.name);//ls
+
+
+
+
+三 内置对象JSON
+	1.	什么是json,json作用 json通常情况下说的是字符串也叫json串
+		
+		
+		json是一种数据格式；现在我们大多数都是通过json数据格式进行前后端数据交互的；  //xml
+		json本质上是一个字符串，简称json串
+		
+		前端往后台传数据的时候，要传json格式的数据  json串
+		在前端json串的格式就是对象或者对象的数组；所以我们要先把数据存储为对象或者对象的数组，然后转化为json串进行传递
+
+
+		var a = 10;
+		var name = 'zhaoliying';
+
+
+		第一步： 把数组封装为对象或者对象的数组     
+		var obj = 
+
+
+	
+		
+	2.	JSON对象的方法: parse， stringify
+
+
+
+	
+四 Math工具对象
+	1.	Math对象方式的使用: round, floor,ceil,   radom,  max  min  PI  pow abs  sin
+		round, floor,ceil  都是要把小数转化为整数，如果是整数了，不动；
+	2.	案例：
+		1. 随机数点名
+		2. 随机生成验证码
+
+五、 Date日期对象
+	1.	Date对象的方法
+		var date = new Date();
+		console.log(date);
+		console.log(date.getFullYear());
+		console.log(date.getMonth());
+		console.log(date.getDate());
+		console.log(date.getHours());
+		console.log(date.getMinutes());
+		console.log(date.getSeconds());
+		console.log(date.getYear());//已经废弃
+		console.log(date.toLocaleTimeString());
+		console.log(date.toLocaleDateString());
+		console.log(date.getTime());//1970 年 1 月 1 日之间的毫秒数
+
+
+	2.	案例：
+		1. 格式化日期     2019年8月24日 下午4：43：
+		2. 封装函数实现格式化日期
+
+六、包装对象
+	基本数据类型也可以使用.调用方法
+		
+	
+
+
+晚自习强化
+	对象的增删改查，构造函数
+
+	1、创建两个同一品牌的手机对象（要求品牌和方法在原型当中定义共享使用）;
+		接下来把实例化对象的过程以及原型的原理图  每人画一遍；
+	2、封装自己的工具函数实现随机验证码功能，要求验证码的位数可以根据参数变化
+	3、函数传参如果传的是基本数据类型和传引用（对象）有什么区别；
+	4、把当天封装的随机数以及日期函数必须搞定
+	5、把值类型和引用类型面试题做一下，记得画图；

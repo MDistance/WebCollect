@@ -1,0 +1,411 @@
+es5
+一、严格模式：（了解）
+1. 理解:
+  * 除了正常运行模式(混杂模式)，ES5添加了第二种运行模式："严格模式"（strict mode）。
+  * 顾名思义，这种模式使得Javascript在更严格的语法条件下运行
+2.  目的/作用
+	* 消除Javascript语法的一些不合理、不严谨之处，减少一些怪异行为
+	* 消除代码运行的一些不安全之处，为代码的安全运行保驾护航
+	* 为未来新版本的Javascript做好铺垫
+3. 使用
+  * 在全局或函数的第一条语句定义为: 'use strict';
+  * 如果浏览器不支持, 只解析为一条简单的语句, 没有任何副作用
+4. 语法和行为改变
+	* 必须用var声明变量
+	* 禁止自定义的函数中的this指向window
+	* 创建eval作用域
+	* 对象不能有重名的属性
+	* 函数不能有重复的形参
+
+二、ES5 Object扩展方法：
+
+	Object.prototype.create()
+
+
+
+
+	1. Object.create(prototype, [descriptors])
+  		* 作用: 以指定对象为原型创建新的对象
+  		* 为新的对象指定新的属性, 并对属性进行描述，新的属性必须是在对象当中，而属性的值也是一个对象
+		descriptors{
+			属性{
+				value : 指定值
+    				writable : 标识当前属性值是否是可修改的, 默认为false
+    				configurable: 标识当前属性是否可以被删除 默认为false
+    				enumerable： 标识当前属性是否能用for in 枚举 默认为false
+			}，
+			属性{
+				value : 指定值
+    				writable : 标识当前属性值是否是可修改的, 默认为false
+    				configurable: 标识当前属性是否可以被删除 默认为false
+    				enumerable： 标识当前属性是否能用for in 枚举 默认为false
+			}，
+
+		}
+    			
+
+	2. Object.defineProperties(object, descriptors)***********************************************************
+  		* 作用: 为指定对象定义扩展多个属性;   
+		根据回调添加属性和读取属性值
+
+		添加新的属性：obj.a = 值
+
+		如果属性是动态关联的必须用下面两个方法：
+			
+		descriptors{
+			属性{
+				* get ：用来获取当前属性值得回调函数
+  				* set ：修改当前属性值得触发的回调函数，并且实参即为修改后的值
+			}，
+			属性{
+				* get ：用来获取当前属性值得回调函数
+  				* set ：修改当前属性值得触发的回调函数，并且实参即为修改后的值
+			}，
+
+		}
+		
+  		
+  		* 存取器属性：setter,getter一个用来存值，一个用来取值
+
+三、ES5 函数实例扩展方法：
+	1. Function.prototype.bind(obj) :
+  		* 作用: 将函数内的this绑定为obj, 并将函数返回
+	2. 面试题: 区别bind()与call()和apply()?
+ 		* 都能指定函数中的this
+  		* call()/apply()是立即调用函数
+  		* bind()是将函数返回
+
+es6
+一、两个关键字 let const
+
+	***let
+		1. 作用:
+  			* 与var类似, 用于声明一个变量
+		2. 特点:
+  			* 在块作用域内有效
+  			* 不能重复声明
+  			* 不会预处理, 不存在提升
+		3. 应用:
+  			* 循环遍历加监听
+  			* 使用let取代var是趋势
+	***const
+		1. 作用:
+  			* 定义一个变量，变量的值不能修改
+		2. 特点:
+  			* 不能修改
+  			* 其它特点同let
+		3. 应用:
+  			* 保存不用改变的数据
+			const 定义的变量必须初始化  
+
+			const a = 10;//const定义的变量值就是初始化的值，必须初始化   否则值就固定是undefined;下面两行不允许；
+
+			const a;
+			a = 10;
+	
+
+二、变量的解构赋值
+	1. 理解:
+  		* 从对象或数组中提取数据, 并赋值给变量(多个)
+	2. 对象的解构赋值
+  		let {n, a} = {n:'tom', a:12}
+	3. 数组的解构赋值
+  		let [a,b] = [1, 'atguigu'];
+	4. 用途
+  		* 给多个形参赋值
+
+		function fn([a,b,c]){
+			console.log(a,b,c);
+		}
+		
+		fn([1,2,3])
+
+
+
+
+
+三、模板字符串
+	模板字符串 : 简化字符串的拼接
+  		* 模板字符串必须用 `` 包含
+  		* 变化的部分使用${xxx}定义
+
+
+四、简化对象写法
+	简化的对象写法
+		* 省略同名的属性值
+		* 省略方法的function
+		* 例如:
+  			let x = 1;
+  			let y = 2;
+  			let point = {
+    				x,
+    				y,
+    				setX (x) {this.x = x}
+  			};
+
+五、箭头函数***************************************************
+	* 作用: 定义匿名函数
+
+	var fn = function(){};
+	
+	* 基本语法:
+  		* 没有参数: () => console.log('xxxx')
+  		* 一个参数: i => i+2
+  		* 大于一个参数: (i,j) => i+j
+  		* 函数体如果只有一条语句可以不用大括号: 不写大括号的话默认返回这条语句的结果而不是return的结果，如果写还是return的结果；
+  		* 函数体如果有多个语句, 需要用{}包围，默认返回的是return的结果
+		注意：其实返回值就看有没有{}，如果有就是return的返回值，如果没有就是这条语句的结果；
+
+	* 使用场景: 多用来定义回调函数
+
+	* 箭头函数的特点：
+    		1、简洁
+    		2、箭头函数没有自己的this，箭头函数的this不是调用的时候决定的，而是在定义的时候处在的对象就是它的this
+   		3、扩展理解： 箭头函数的this看外层的是否有函数，
+        		如果有，外层函数的this就是内部箭头函数的this，
+        		如果没有，则this是window。
+
+
+六、点点点运算符
+	* 用途
+		1. rest(可变)参数（打包）
+    			* 用来取代arguments 但比arguments灵活,只能是最后部分形参参数
+  			function add(...values) {
+    				let sum = 0;
+    				for(value of values) {
+      					sum += value;
+    				}
+   				 return sum;
+  			}
+		2. 扩展运算符（解包）
+  			let arr1 = [1,3,5];
+  			let arr2 = [2,...arr1,6];
+  			arr2.push(...arr1);
+
+七、形参默认值
+	* 形参的默认值----当不传入参数的时候默认使用形参里的默认值
+    		function Point(x = 1,y = 2) {
+    			this.x = x;
+    			this.y = y;
+    		}
+
+
+八、Symbol：
+      前言：ES5中对象的属性名都是字符串，容易造成重名，污染环境
+      概念：ES6中的添加了一种原始数据类型symbol(已有的原始数据类型：String, Number, boolean, null, undefined, 对象)
+      特点：
+        1、Symbol属性对应的值是唯一的，解决命名冲突问题
+        2、Symbol值不能与其他数据进行计算，包括同字符串拼串
+        3、for in, for of遍历时不会遍历symbol属性。
+      使用：
+        1、调用Symbol函数得到symbol值
+          let symbol = Symbol();
+          let obj = {};
+          obj[symbol] = 'hello';
+
+        2、传参标识 给对象唯一的属性名，但是对象的这个属性不能简单的访问了，如果要获取必须使用Object.getOwnPropertySymbols(obj)
+          let symbol = Symbol('one');
+          let symbol2 = Symbol('two');
+          let obj = {};
+	  obj[smbol] = 1;
+	  obj[smbol2] = 2;
+	  obj.Symbol('one')  obj["Symbol('one')"] 都无法获取对象的值了；
+
+        3、内置Symbol值
+          * 除了定义自己使用的Symbol值以外，ES6还提供了11个内置的Symbol值，指向语言内部使用的方法。
+          - Symbol.iterator   是一个迭代器方法，可以让数据通过for of去遍历；
+           * 对象的Symbol.iterator属性，指向该对象的默认遍历器方法(后边讲)
+
+九、迭代器（遍历器）
+	概念： iterator是一种接口机制，为各种不同的数据结构提供统一的访问机制
+    	作用：
+      		1、为各种数据结构，提供一个统一的、简便的访问接口；
+      		2、使得数据结构的成员能够按某种次序排列
+      		3、ES6创造了一种新的遍历命令for...of循环，Iterator接口主要供for...of消费。
+    	工作原理：
+      		- 创建一个指针对象，指向数据结构的起始位置。
+      		- 第一次调用对象的next方法，指针自动指向数据结构的第一个成员
+      		- 接下来不断调用next方法，指针会一直往后移动，直到指向最后一个成员
+      		- 每调用next方法返回的是一个包含value和done的对象，{value: 当前成员的值,done: 布尔值}
+        	* value表示当前成员的值，done对应的布尔值表示当前的数据的结构是否遍历结束。
+        	* 当遍历结束的时候返回的value值是undefined，done值为true
+
+    	原生具备iterator接口的数据(可用for of遍历)
+      		1、Array
+      		2、arguments
+      		3、set容器
+      		4、map容器
+      		5、String
+      		。。。
+
+十、class类的概念
+	1. 通过class定义类/实现类的继承
+	2. 在类中通过constructor定义构造方法
+	3. 通过new来创建类的实例
+	4. 通过extends来实现类的继承
+	5. 通过super调用父类的构造方法
+	6. 重写从父类中继承的一般方法
+
+
+
+十一、数值扩展(了解)
+	1. 二进制与八进制数值表示法: 二进制用0b, 八进制用0o
+	   var a = 10;   10.1   0b  0   0x
+	2. Number.isFinite(i) : 判断是否是有限大的数
+	3. Number.isNaN(i) : 判断是否是NaN
+	4. Number.isInteger(i) : 判断是否是整数
+	5. Number.parseInt(str) : 将字符串转换为对应的数值
+	6. Math.trunc(i) : 直接去除小数部分
+
+
+十二、对象扩展
+	1. Object.is(v1, v2)
+  		* 判断2个数据是否全等
+	2. Object.assign(target, source1, source2..)
+  		* 将源对象的属性复制到目标对象上
+	3. 直接操作 __proto__ 属性
+  		let obj2 = {};
+  		obj2.__proto__ = obj1;
+
+
+十三、深度克隆（深拷贝）
+	1、数据类型：
+    		* 数据分为基本的数据类型(String, Number, boolean, Null, Undefined)和对象数据类型
+    		- 基本数据类型：
+     		 特点： 存储的是该对象的实际数据
+    		- 对象数据类型：
+      		 特点： 栈内存储的是对象在堆当中的地址（引用），真实的数据存放在堆里
+  	2、复制数据
+    		- 基本数据类型存放的就是实际的数据，可直接复制
+      		let number2 = 2;
+      		let number1 = number2;
+    	- 克隆数据：对象/数组
+      		1、区别： 浅拷贝/深度拷贝
+         		判断： 拷贝是否产生了新的数据还是拷贝的是数据的引用
+         		知识点：对象数据存放的是对象在栈内存的引用，直接复制的是对象的引用
+         		let obj = {username: 'kobe'}
+         		let obj1 = obj; // obj1 复制了obj在栈内存的引用
+      		2、常用的拷贝技术
+        		1). arr.concat(): 数组浅拷贝
+        		2). arr.slice(): 数组浅拷贝
+        		3). JSON.parse(JSON.stringify(arr/obj)): 数组或对象深拷贝, 但不能处理函数数据
+        		4). 浅拷贝包含函数数据的对象/数组
+        		5). 深拷贝包含函数数据的对象/数组
+
+			深度拷贝：主要针对的数据类型是   【】   {}；  
+			var a = 1;
+			var b = a;
+			a = 10;
+
+			//改动一个的值，另外一个跟着改变   那么就一定是浅拷贝（因为存在地址相同）；
+			
+			//改动一个的值，另外一个没有改变   那么就一定是深拷贝（因为里面所有的数据都不存在相同地址）；
+
+
+
+			检查所有数据类型的方法：自己封装实现；
+				
+			 function checkType(obj) {
+        			return Object.prototype.toString.call(obj).slice(8,-1);
+    			 }
+
+
+
+
+
+
+
+			
+十四、set和map
+	1. Set容器 : 无序不可重复的多个value的集合体           
+  		* Set()
+  		* Set(array)
+  		* add(value)
+  		* delete(value)
+  		* has(value)
+  		* clear()
+  		* size
+
+		数组去重你还记得吗？
+			
+
+
+
+
+
+	2. Map容器 : 无序的 key不重复的多个key-value的集合体（了解）
+  		* Map()
+  		* Map(array)
+  		* set(key, value)//添加
+  		* get(key)
+  		* delete(key)
+  		* has(key)
+  		* clear()
+  		* size
+
+十五、for...of循环
+	for(let value of target){}循环遍历
+  		1. 遍历数组
+  		2. 遍历Set
+  		3. 遍历Map
+  		4. 遍历字符串
+  		5. 遍历伪数组
+	
+        for   forEach   for in 和 for of的区别：
+		
+	for最原始的循环  有循环遍历  多用来遍历数组  可以break和continue
+	forEach是数组的方法，遍历数组简单粗暴，但是不能break和continue
+	for in是用来遍历对象属性的，效率最慢  因为它不但要遍历对象本身的也会去遍历对象的原型
+	for of可以遍历数组、伪数组、set、map、字符串等等; 遍历的就是值，也可以使用break和continue;
+
+
+
+
+
+	
+
+
+
+es7
+	幂运算符**
+		
+	
+
+
+
+
+
+
+
+
+
+
+function Person(name,age){
+		this.name = name;
+		this.age = age;
+		a = 100;
+		return '哈哈';
+	}
+
+	Person.b = 200;
+
+
+	var p = new Person('xly',20);
+
+	console.log(p.b);
+
+
+	var pp = Person('ym',20);
+	console.log(pp.a);
+
+	
+
+
+
+
+
+
+
+
+
+	
